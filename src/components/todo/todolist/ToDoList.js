@@ -4,8 +4,7 @@ import ToDo from "../todo/ToDo";
 import classes from "./ToDoList.module.css";
 
 const ToDoList = () => {
-  const state = useSelector((state) => state);
-  const filtredToDoS = getUsersToDo(state);
+  const filtredToDoS = useSelector((state) => getUsersToDo(state));
 
   return (
     <ul className={classes.list}>
