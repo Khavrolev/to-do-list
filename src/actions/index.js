@@ -1,21 +1,24 @@
-let idToDoCounter = 0;
-let idUserCounter = 0;
+let idToDoCounter = 201;
 
-export const addToDo = (text) => ({
+export const addToDo = (title, userId) => ({
   type: "ADD_TODO",
-  id: idToDoCounter++,
-  text,
+  payload: {
+    id: idToDoCounter++,
+    title,
+    userId,
+  },
 });
 
 export const toggleToDo = (id) => ({
   type: "TOGGLE_TODO",
-  id,
+  payload: {
+    id,
+  },
 });
 
-export const loginUser = (name) => ({
+export const loginUser = (user) => ({
   type: "LOGIN_USER",
-  id: idUserCounter++,
-  name,
+  payload: { ...user },
 });
 
 export const logoutUser = () => ({

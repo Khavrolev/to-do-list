@@ -22,7 +22,7 @@ const ToDo = ({ todo }) => {
       }}
       onClick={onClick}
     >
-      {todo.text}
+      {todo.title}
     </li>
   );
 };

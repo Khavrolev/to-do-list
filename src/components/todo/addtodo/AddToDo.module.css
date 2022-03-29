@@ -1,3 +1,8 @@
+.control {
+  display: flex;
+  flex-direction: column;
+}
+
 .form {
   display: flex;
   flex-direction: row;
@@ -23,7 +28,7 @@
 
 .btn {
   padding: 5px 20px;
-  width: 140px;
+  width: 160px;
   border: none;
   outline: none;
   background: #2f2f2f;

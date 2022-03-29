@@ -1,13 +1,15 @@
 import { useSelector } from "react-redux";
+import { getUsersToDo } from "../../../selectors";
 import ToDo from "../todo/ToDo";
 import classes from "./ToDoList.module.css";
 
 const ToDoList = () => {
-  const toDoS = useSelector((state) => state.toDoS);
+  const state = useSelector((state) => state);
+  const filtredToDoS = getUsersToDo(state);
 
   return (
     <ul className={classes.list}>
-      {toDoS.map((item) => (
+      {filtredToDoS.map((item) => (
         <ToDo key={item.id} todo={item} />
       ))}
     </ul>

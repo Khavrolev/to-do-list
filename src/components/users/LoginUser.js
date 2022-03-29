@@ -1,46 +1,60 @@
+import { useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Select from "react-select";
 import { loginUser, logoutUser } from "../../actions";
-import classes from "../input/Input.module.css";
+import classes from "./LoginUser.module.css";
 
 const LoginUser = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  let input;
+  const users = useSelector((state) => state.users);
+  let inputId = -1;
 
-  const onSubmit = (event) => {
+  const selectOptions = useMemo(
+    () =>
+      users.map((item) => {
+        return { value: item.id, label: item.username };
+      }),
+    [users],
+  );
+
+  const handleLogin = (event) => {
     event.preventDefault();
 
-    if (!input.value.trim()) {
+    if (inputId < 0) {
       return;
     }
 
-    dispatch(loginUser(input.value));
+    dispatch(loginUser(users.find((item) => item.id === inputId)));
 
-    input.value = "";
+    inputId = -1;
   };
 
-  const onClick = (event) => {
+  const handleLogout = (event) => {
     event.preventDefault();
 
     dispatch(logoutUser());
   };
 
+  const handleSelectChange = (event) => {
+    inputId = event.value;
+  };
+
   return (
-    <div>
+    <div className={classes.sidebar}>
       {user ? (
         <div className={classes.form}>
-          <div className={classes.field}>{user.name}</div>
-          <button className={classes.btn} onClick={onClick}>
+          <div className={classes.field}>{user.username}</div>
+          <button className={classes.btn} onClick={handleLogout}>
             Logout
           </button>
         </div>
       ) : (
-        <form className={classes.form} onSubmit={onSubmit}>
-          <input
-            className={classes.field}
-            type="text"
-            name="user"
-            ref={(element) => (input = element)}
+        <form className={classes.form} onSubmit={handleLogin}>
+          <Select
+            className={classes.select}
+            options={selectOptions}
+            onChange={handleSelectChange}
           />
           <input className={classes.btn} type="submit" value="Login" />
         </form>
